@@ -8,7 +8,7 @@ export default function ChatList() {
   const handleClickChat = (chatId: string) => setCurChat(chatId);
 
   return (
-    <div className="flex-1 flex flex-col items-start gap-2 w-full overflow-scroll">
+    <div className="flex-1 flex flex-col items-start gap-2 w-full overflow-y-croll">
       {chats?.map((chat) => (
         <ChatItem
           key={chat.chat_id}

@@ -4,6 +4,7 @@ import MessageList from './message-list';
 import { Dialogue } from '../../type';
 import Dropdown from '../../shared/dropdown/component';
 import { useChatStore } from '../../stores/chat/chatStore';
+import TextArea from '../../shared/inputs/textarea/component';
 
 export default function MessageSection() {
   const { chatModels, curChat, setChatModels } = useChatStore();
@@ -24,13 +25,13 @@ export default function MessageSection() {
 
   return (
     <div className="flex-1 w-full flex flex-col relative m-2 bg-white rounded-md overflow-hidden">
-      <div className="p-2">
+      <div className="pt-2 pl-2 pr-2">
         <Dropdown items={chatModels} targetName="chat_model_name" />
       </div>
       <MessageList items={dialogues} />
       <div className="w-full absolute bottom-0 p-2 flex gap-2 bg-white">
         <div className="w-full">
-          <textarea className="border w-full h-full"></textarea>
+          <TextArea />
         </div>
         <Button color="primary">제출</Button>
       </div>

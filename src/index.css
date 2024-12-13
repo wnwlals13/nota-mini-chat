@@ -2,17 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 #root,
-body {
+body,
+div {
   margin: 0;
   padding: 0;
+}
+
+#root,
+body {
   min-width: 320px;
   min-height: 100vh;
 }
 
-div {
-  margin: 0;
-  padding: 0;
+* {
+  font-family: 'Pretendard-Regular', sans-serif;
 }
 
 @layer base {
