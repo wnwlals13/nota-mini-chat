@@ -1,14 +1,12 @@
 import { Chat } from '../../type';
 
-export default function ChatItem({
-  item,
-  isSelected,
-  handleClick,
-}: {
+export interface ChatItemProps {
   item: Chat;
-  isSelected?: boolean;
+  isSelected?: boolean /* 현재 채팅 여부 */;
   handleClick: () => void;
-}) {
+}
+
+export default function ChatItem({ item, isSelected, handleClick }: ChatItemProps) {
   return (
     <a
       className={`w-full min-h-[50px] border-b-[1px] p-2 cursor-pointer ${

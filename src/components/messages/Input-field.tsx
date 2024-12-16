@@ -1,50 +1,37 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TextArea from '../../shared/inputs/textarea/component';
 import { useChatStore } from '../../stores/chat/chatStore';
 import Button from '../../shared/buttons/component';
+import { useAddMessage } from '../../hooks/useAddMessage';
+import { useAddChat } from '../../hooks/useAddChat';
 
-export default function InputField({
-  fetchMessages,
-}: {
-  fetchMessages: (chatId: string) => Promise<void>;
-}) {
-  const { curChat, isAvailable, isNewChat, newChatModel, setCurChat, setChats, setIsNewChat } =
-    useChatStore();
+export default function InputField() {
+  const { curChat, isAvailable, isNewChat, newChatModel, setIsNewChat } = useChatStore();
   const [prompt, setPrompt] = useState<string>('');
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { mutate: addChat, isSuccess: chatSuccess } = useAddChat();
+  const { mutate: addMsg, isSuccess: msgSuccess } = useAddMessage();
 
   const handleSubmit = async () => {
     // 새 채팅이고, 채팅 모델을 선택했으면 새롭게 추가
     if (isNewChat && newChatModel) {
-      const resposne = await fetch('/chats', {
-        method: 'POST',
-        body: JSON.stringify({ chat_model_id: newChatModel }),
-      });
-      const results = await resposne.json();
-
-      setCurChat(results.data[results.data.length - 1]);
-      setChats();
-      addMsgToChat(results.data[results.data.length - 1].chat_id);
-
-      // 새 채팅 해제
-      setIsNewChat(false);
+      addChat(newChatModel);
     }
 
-    if (curChat) addMsgToChat(curChat?.chat_id);
+    // 새 채팅 해제
+    setIsNewChat(false);
+
+    if (curChat) addMsg({ chatId: curChat.chat_id, prompt: prompt });
   };
 
-  const addMsgToChat = async (chatId: string) => {
-    await fetch(`/chats/${chatId}/dialogues`, {
-      method: 'POST',
-      body: JSON.stringify({ prompt: prompt }),
-    });
+  useEffect(() => {
+    if (chatSuccess && curChat) addMsg({ chatId: curChat.chat_id, prompt: prompt });
+  }, [chatSuccess]);
 
-    // 메세지 petch
-    fetchMessages(chatId);
-
+  useEffect(() => {
     // textarea 초기화
-    if (inputRef.current) inputRef.current.value = '';
-  };
+    if (msgSuccess && inputRef.current) inputRef.current.value = '';
+  }, [msgSuccess]);
 
   return (
     <div className="w-full absolute bottom-0 p-2 flex gap-2 bg-white">

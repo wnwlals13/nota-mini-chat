@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react';
 import MessageList from './message-list';
-import { ChatModel, Dialogue } from '../../type';
+import { ChatModel } from '../../type';
 import Dropdown from '../../shared/dropdown/component';
 import { useChatStore } from '../../stores/chat/chatStore';
 import InputField from './Input-field';
+import { useMessageList } from '../../hooks/useMessageList';
+import { useEffect } from 'react';
 
 export default function MessageSection() {
+  const { data: dialogues } = useMessageList();
   const {
     chatModels,
     curChat,
     isNewChat,
     setNewChatModel,
     setIsAvailable,
-    setChats,
     setCurChat,
     setChatModels,
   } = useChatStore();
-  const [dialogues, setDialogues] = useState<Dialogue[]>([]);
 
   const handleSetChat = async (item: ChatModel) => {
     // 모델 변경 시, 초기화
@@ -25,20 +25,11 @@ export default function MessageSection() {
     setNewChatModel(item.chat_model_id);
   };
 
-  const fetchMessages = async (chatId: string) => {
-    await fetch(`/chats/${chatId}`)
-      .then((res) => res.json())
-      .then((res) => setDialogues(res.data.dialogues));
-
-    setChats();
-  };
-
   useEffect(() => {
-    if (curChat) {
-      fetchMessages(curChat.chat_id);
+    if (curChat || isNewChat) {
       setChatModels();
-    } else setDialogues([]);
-  }, [curChat]);
+    }
+  }, [curChat, isNewChat]);
 
   return (
     <div className="flex-1 w-full flex flex-col relative m-2 bg-white rounded-md overflow-hidden">
@@ -53,7 +44,7 @@ export default function MessageSection() {
         />
       </div>
       <MessageList items={dialogues} />
-      <InputField fetchMessages={fetchMessages} />
+      <InputField />
     </div>
   );
 }
