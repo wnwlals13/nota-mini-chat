@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import { IButtonProps } from './type';
+import { ButtonProps } from './type';
 
 export const buttonVariants = cva(
   `inline-flex min-w-[50px] items-center justify-center rounded-md`,
@@ -14,8 +14,12 @@ export const buttonVariants = cva(
   },
 );
 
-export default function Button({ size, color, children }: IButtonProps) {
+export default function Button({ size, color, children, ...props }: ButtonProps) {
   const className = buttonVariants({ size, color });
 
-  return <button className={className}>{children}</button>;
+  return (
+    <button className={className} {...props}>
+      {children}
+    </button>
+  );
 }

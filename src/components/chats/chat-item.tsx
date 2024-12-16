@@ -11,10 +11,12 @@ export default function ChatItem({
 }) {
   return (
     <a
-      className={`w-full border-b-[1px] p-2 ${isSelected ? 'bg-gray1 rounded-md' : ''}`}
+      className={`w-full min-h-[50px] border-b-[1px] p-2 cursor-pointer ${
+        isSelected ? 'bg-gray1 rounded-md' : ''
+      }`}
       onClick={handleClick}
     >
-      <div>{item.dialogues[0].completion}</div>
+      <div>{item.dialogues[0]?.prompt}</div>
       <div>{item.chat_model_name}</div>
     </a>
   );
