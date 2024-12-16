@@ -43,13 +43,8 @@ export default function Dropdown<T>({
   }, []);
 
   useEffect(() => {
-    console.log('items=>', items);
     if (items) setLoading(false);
   }, [items]);
-
-  useEffect(() => {
-    console.log('disabled', disabled);
-  }, [disabled]);
 
   return (
     <div className="relative w-[200px]">
