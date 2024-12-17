@@ -14,6 +14,21 @@ export default {
           foreground: 'rgb(var(--secondary-foreground))',
         },
       },
+      keyframes: {
+        'dot-bounce': {
+          '0%, 100%': {
+            transform: 'scale(0)',
+            opacity: '0',
+          },
+          '50%': {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
+        },
+      },
+      animation: {
+        'dot-bounce': 'dot-bounce 1.2s infinite ease-in-out',
+      },
     },
   },
   plugins: [],

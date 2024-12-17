@@ -5,6 +5,11 @@ export const buttonVariants = cva(
   `inline-flex min-w-[50px] items-center justify-center rounded-md`,
   {
     variants: {
+      variant: {
+        default: 'bg-gray-200',
+        outline: 'border border-gray-500',
+        disabled: 'bg-gray-200 cursor-not-allowed',
+      },
       size: { sm: 'w-2', md: 'w-4', full: 'w-full' },
       color: {
         primary: 'bg-primary text-primary-foreground',
@@ -14,8 +19,14 @@ export const buttonVariants = cva(
   },
 );
 
-export default function Button({ size, color, children, ...props }: ButtonProps) {
-  const className = buttonVariants({ size, color });
+export default function Button({
+  variant = 'default',
+  size,
+  color,
+  children,
+  ...props
+}: ButtonProps) {
+  const className = buttonVariants({ variant, size, color });
 
   return (
     <button className={className} {...props}>

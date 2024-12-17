@@ -8,5 +8,6 @@ export const useMessageList = () => {
   return useQuery({
     queryKey: ['messages', curChat?.chat_id],
     queryFn: () => fetchMessages(curChat!.chat_id),
+    enabled: !!curChat?.chat_id,
   });
 };

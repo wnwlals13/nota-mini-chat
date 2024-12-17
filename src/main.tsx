@@ -4,16 +4,14 @@ import App from './App.tsx';
 import './index.css';
 
 import { MswProvider } from './components/MswWrapper.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
+import { QueryProvider } from './stores/query/global.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MswProvider>
-      <QueryClientProvider client={queryClient}>
+      <QueryProvider>
         <App />
-      </QueryClientProvider>
+      </QueryProvider>
     </MswProvider>
   </StrictMode>,
 );

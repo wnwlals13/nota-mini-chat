@@ -1,5 +1,21 @@
 import { RequestMsgDto } from './useAddMessage';
 
+export const fetchChats = async () => {
+  const response = await fetch('/chats', { method: 'GET' })
+    .then((res) => res.json())
+    .then((res) => res.data);
+
+  return response;
+};
+
+export const fetchChatModels = async () => {
+  const response = await fetch('/chat_model', { method: 'GET' })
+    .then((res) => res.json())
+    .then((res) => res.data);
+
+  return response;
+};
+
 export const fetchMessages = async (chatId: string) => {
   const response = await fetch(`/chats/${chatId}`)
     .then((res) => res.json())
@@ -9,10 +25,12 @@ export const fetchMessages = async (chatId: string) => {
 };
 
 export const addMessage = async ({ chatId, prompt }: RequestMsgDto) => {
-  await fetch(`/chats/${chatId}/dialogues`, {
+  const response = await fetch(`/chats/${chatId}/dialogues`, {
     method: 'POST',
     body: JSON.stringify({ prompt: prompt }),
-  });
+  }).then((res) => res.json());
+
+  return response;
 };
 
 export const addChat = async (chatModelId: string) => {

@@ -3,7 +3,16 @@
 import { delay, http, HttpResponse } from 'msw';
 import { v4 as uuidv4 } from 'uuid';
 import { CHAT_MODELS, CHATS } from './data';
-import { AddChatParams, AddChatRequestBody, AddChatResponseBody } from './type';
+import {
+  AddChatParams,
+  AddChatRequestBody,
+  AddChatResponseBody,
+  AddMsgRequestBody,
+  AddMsgResponseBody,
+  ChatParams,
+  FetchChatRequestBody,
+  FetchChatResponseBody,
+} from './type';
 
 let chatData = CHATS;
 const chatModels = CHAT_MODELS;
@@ -45,17 +54,20 @@ export const handlers = [
   ),
 
   // 단일 채팅 조회
-  http.get<{ chatId: string }, any, any, '/chats/:chatId'>('/chats/:chatId', async ({ params }) => {
-    const { chatId } = params;
-    const data = chatData.find((chat) => chat.chat_id === chatId);
+  http.get<ChatParams, FetchChatRequestBody, FetchChatResponseBody, '/chats/:chatId'>(
+    '/chats/:chatId',
+    async ({ params }) => {
+      const { chatId } = params;
+      const data = chatData.find((chat) => chat.chat_id === chatId);
 
-    return HttpResponse.json({
-      data,
-    });
-  }),
+      return HttpResponse.json({
+        data,
+      });
+    },
+  ),
 
   // 단일 채팅에 대화 추가
-  http.post<{ chatId: string }, { prompt: string }, any, '/chats/:chatId/dialogues'>(
+  http.post<ChatParams, AddMsgRequestBody, AddMsgResponseBody, '/chats/:chatId/dialogues'>(
     '/chats/:chatId/dialogues',
     async ({ params, request }) => {
       await delay(2000);
@@ -88,7 +100,7 @@ export const handlers = [
 
   // 모델 목록
   http.get('/chat_model', async () => {
-    await delay(2000);
+    await delay(1000);
     return HttpResponse.json({
       data: chatModels,
     });

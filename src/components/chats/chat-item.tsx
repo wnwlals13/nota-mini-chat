@@ -7,6 +7,10 @@ export interface ChatItemProps {
 }
 
 export default function ChatItem({ item, isSelected, handleClick }: ChatItemProps) {
+  if (!item) return null;
+
+  const { chat_model_name, dialogues } = item;
+
   return (
     <a
       className={`w-full min-h-[50px] border-b-[1px] p-2 cursor-pointer ${
@@ -14,8 +18,8 @@ export default function ChatItem({ item, isSelected, handleClick }: ChatItemProp
       }`}
       onClick={handleClick}
     >
-      <div>{item.dialogues[0]?.prompt}</div>
-      <div>{item.chat_model_name}</div>
+      <div>{dialogues[0]?.prompt}</div>
+      <div>{chat_model_name}</div>
     </a>
   );
 }

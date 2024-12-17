@@ -6,22 +6,35 @@ import { useAddMessage } from '../../hooks/useAddMessage';
 import { useAddChat } from '../../hooks/useAddChat';
 
 export default function InputField() {
-  const { curChat, isAvailable, isNewChat, newChatModel, setIsNewChat } = useChatStore();
+  const { curChat, isAvailable, isNewChat, newChatModel, setIsNewChat, setIsComplete } =
+    useChatStore();
   const [prompt, setPrompt] = useState<string>('');
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { mutate: addChat, isSuccess: chatSuccess } = useAddChat();
-  const { mutate: addMsg, isSuccess: msgSuccess } = useAddMessage();
+  const { mutate: addMsg, isPending } = useAddMessage();
 
-  const handleSubmit = async () => {
-    // 새 채팅이고, 채팅 모델을 선택했으면 새롭게 추가
+  const handleSubmit = () => {
+    /* 질문이 없다면 리턴 */
+    if (!prompt) return;
+
+    /* 질문 답변 중 여부 체크 */
+    setIsComplete(false);
+
+    /* 새 채팅이고, 채팅 모델을 선택했으면 새롭게 추가 */
     if (isNewChat && newChatModel) {
       addChat(newChatModel);
     }
-
-    // 새 채팅 해제
-    setIsNewChat(false);
-
     if (curChat) addMsg({ chatId: curChat.chat_id, prompt: prompt });
+
+    /* 새 채팅 해제 */
+    setIsNewChat(false);
+  };
+
+  const handleKeyDonw = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key == 'Enter') {
+      e.preventDefault();
+      handleSubmit();
+    }
   };
 
   useEffect(() => {
@@ -29,20 +42,28 @@ export default function InputField() {
   }, [chatSuccess]);
 
   useEffect(() => {
-    // textarea 초기화
-    if (msgSuccess && inputRef.current) inputRef.current.value = '';
-  }, [msgSuccess]);
+    /* 질문이 끝나면 Textarea 질문 내용 제거 */
+    if (!isPending) {
+      if (inputRef.current) inputRef.current.value = '';
+      setPrompt('');
+    }
+  }, [isPending]);
 
   return (
     <div className="w-full absolute bottom-0 p-2 flex gap-2 bg-white">
       <div className="w-full">
         <TextArea
           ref={inputRef}
-          disabled={isAvailable}
+          disabled={isAvailable || isPending}
           onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={handleKeyDonw}
         />
       </div>
-      <Button color="primary" disabled={isAvailable} onClick={handleSubmit}>
+      <Button
+        variant={`${!prompt ? 'disabled' : 'default'}`}
+        color={!!prompt ? 'primary' : undefined}
+        onClick={handleSubmit}
+      >
         제출
       </Button>
     </div>

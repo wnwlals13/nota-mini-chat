@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addChat } from './api';
 import { Chat } from '../type';
 import { useChatStore } from '../stores/chat/chatStore';
@@ -8,13 +8,12 @@ export interface ResponseChatDto {
 }
 
 export const useAddChat = () => {
-  const { setCurChat, setChats } = useChatStore();
+  const { setCurChat } = useChatStore();
 
   return useMutation<ResponseChatDto, Error, string>({
     mutationFn: addChat,
     onSuccess: (res) => {
       setCurChat(res.data[res.data.length - 1]);
-      setChats();
     },
   });
 };

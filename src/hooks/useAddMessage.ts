@@ -14,6 +14,7 @@ export const useAddMessage = () => {
   return useMutation<any, Error, RequestMsgDto>({
     mutationFn: addMessage,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['chats'] });
       queryClient.invalidateQueries({ queryKey: ['messages', curChat?.chat_id] });
     },
   });
