@@ -7,12 +7,11 @@ import { useChatModelList } from '../../hooks/useChatModelList';
 
 export default function MessageSection() {
   const { data: chatModels } = useChatModelList();
-  const { curChat, isNewChat, setNewChatModel, setIsAvailable, setCurChat } = useChatStore();
+  const { isNewChat, setNewChatModel, setCurChat } = useChatStore();
 
   const handleSetChat = async (item: ChatModel) => {
     // 모델 변경 시, 초기화
     setCurChat(null);
-    setIsAvailable(true);
     setNewChatModel(item.chat_model_id);
   };
 
@@ -23,9 +22,8 @@ export default function MessageSection() {
           items={chatModels}
           displayName="chat_model_name"
           placeholder="Select Model"
-          initialOption={curChat?.chat_model_name}
-          disabled={isNewChat || !!curChat}
-          onChange={(item) => handleSetChat(item)}
+          disabled={isNewChat}
+          onChange={handleSetChat}
         />
       </div>
       <MessageList />

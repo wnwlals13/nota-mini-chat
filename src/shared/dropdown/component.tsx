@@ -1,14 +1,21 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
-import { IDropdownProps } from './type';
+import { IDropdownItemProps, IDropdownProps } from './type';
 import Loading from '../loading/Loading';
+
+function DropDownItem<T>({ item, displayName, onClick }: IDropdownItemProps<T>) {
+  return (
+    <li className="p-1 hover:bg-gray1 rounded-md" onClick={() => onClick(item)}>
+      <a className="cursor-pointer">{String(item[displayName])}</a>
+    </li>
+  );
+}
 
 export default function Dropdown<T>({
   items,
   displayName,
   placeholder,
-  initialOption,
   disabled,
   onChange,
 }: IDropdownProps<T>) {
@@ -25,11 +32,6 @@ export default function Dropdown<T>({
     setActive((prev) => !prev);
     onChange && onChange(item);
   };
-
-  useEffect(() => {
-    if (initialOption) setSelected(initialOption);
-    else setSelected('');
-  }, [initialOption]);
 
   useEffect(() => {
     if (items) setSelected(String(items[0][displayName]));
@@ -61,13 +63,12 @@ export default function Dropdown<T>({
       <ul className={dropboxStyles}>
         {items?.length > 0 ? (
           items?.map((item, idx) => (
-            <li
+            <DropDownItem
               key={idx}
-              className="p-1 hover:bg-gray1 rounded-md"
-              onClick={() => handleUpdateSelected(item)}
-            >
-              <a className="cursor-pointer">{String(item[displayName])}</a>
-            </li>
+              item={item}
+              onClick={handleUpdateSelected}
+              displayName={displayName}
+            />
           ))
         ) : (
           <div className="h-[110px]">

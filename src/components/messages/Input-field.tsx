@@ -54,6 +54,8 @@ export default function InputField() {
     }
   }, [isPending]);
 
+  const isDisabled = !prompt || isPending; /* 제출 가능 여부 : 질문이 없거나 질문을 한 경우 */
+
   return (
     <div className="w-full absolute bottom-0 p-2 flex gap-2 bg-white">
       <div className="w-full">
@@ -65,8 +67,9 @@ export default function InputField() {
         />
       </div>
       <Button
-        variant={`${!prompt ? 'disabled' : 'default'}`}
+        variant={`${isDisabled ? 'disabled' : 'default'}`}
         color={!!prompt ? 'primary' : undefined}
+        disabled={isDisabled}
         onClick={handleSubmit}
       >
         제출
