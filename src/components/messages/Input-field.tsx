@@ -4,6 +4,7 @@ import { useChatStore } from '../../stores/chat/chatStore';
 import Button from '../../shared/buttons/component';
 import { useAddMessage } from '../../hooks/useAddMessage';
 import { useAddChat } from '../../hooks/useAddChat';
+import { debounce } from '../../utils/common';
 
 export default function InputField() {
   const { curChat, isAvailable, isNewChat, newChatModel, setIsNewChat, setIsComplete } =
@@ -30,6 +31,10 @@ export default function InputField() {
     setIsNewChat(false);
   };
 
+  /* 질문 입력 이벤튼 */
+  const handlePrompt = debounce((e) => setPrompt(e.target.value));
+
+  /* TextArea 내 Enter 이벤트 핸들러 */
   const handleKeyDonw = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key == 'Enter') {
       e.preventDefault();
@@ -42,7 +47,7 @@ export default function InputField() {
   }, [chatSuccess]);
 
   useEffect(() => {
-    /* 질문이 끝나면 Textarea 질문 내용 제거 */
+    /* 질문이 끝나면 Textarea 질문 내용 초기화 */
     if (!isPending) {
       if (inputRef.current) inputRef.current.value = '';
       setPrompt('');
@@ -55,7 +60,7 @@ export default function InputField() {
         <TextArea
           ref={inputRef}
           disabled={isAvailable || isPending}
-          onChange={(e) => setPrompt(e.target.value)}
+          onChange={handlePrompt}
           onKeyDown={handleKeyDonw}
         />
       </div>
