@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IDropdownProps } from './type';
 import DropdownHead from './head';
 import DropdownBody from './body';
 import { useSelected } from './hook';
 
 export default function Dropdown<T>(props: IDropdownProps<T>) {
-  const { disabled, currentOption, items, displayName } = props;
+  const { disabled, currentOption, items, displayName, onChange } = props;
   const [active, setActive] = useState<boolean>(false); /* Dropdown 리스트 열림 여부 */
   const { selected, setSelected } = useSelected(
-    !disabled,
+    disabled,
     currentOption ? currentOption : items ? items[0] : undefined,
     displayName,
   );
@@ -22,7 +22,13 @@ export default function Dropdown<T>(props: IDropdownProps<T>) {
   const handleChange = (item: T) => {
     setSelected(String(item[displayName]));
     setActive((prev) => !prev);
+    onChange && onChange(item);
   };
+
+  useEffect(() => {
+    /* 새 채팅 추가 시 */
+    if (items && !currentOption) onChange && onChange(items[0]);
+  }, [items]);
 
   return (
     <div className="relative w-[200px]">

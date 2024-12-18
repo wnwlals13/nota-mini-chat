@@ -15,8 +15,8 @@ export default function ChatList() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-start gap-2 w-full overflow-y-croll">
-      {isLoading ? (
+    <div className="flex-1 flex flex-col items-start gap-2 w-full overflow-y-scroll">
+      {isLoading && !chats ? (
         <>
           <Loading />
         </>

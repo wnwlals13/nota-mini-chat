@@ -10,7 +10,7 @@ const useChatStore = create<IChatStore>((set) => ({
   isNewChat: false,
   /* 새 채팅 모델 */
   newChatModel: null,
-  /* 답변 완료 여부 */
+  /* 질문 답변 완료 여부 (true:완료, false:미완) */
   isComplete: true,
 
   setCurChat: (item) => set({ curChat: item }),

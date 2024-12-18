@@ -4,7 +4,7 @@ import { useChatStore } from '../../stores/chat/chatStore';
 import ChatList from './chat-list';
 import { FiPlusSquare } from 'react-icons/fi';
 
-function NewButton() {
+export default function ChatSection() {
   const { setIsNewChat, setCurChat } = useChatStore();
 
   const handleAddChat = useCallback(() => {
@@ -14,18 +14,12 @@ function NewButton() {
   }, []);
 
   return (
-    <div className="mb-2">
-      <Button color="secondary" size="md" onClick={handleAddChat}>
-        <FiPlusSquare className="w-full h-full" />
-      </Button>
-    </div>
-  );
-}
-
-export default function ChatSection() {
-  return (
-    <div className="min-w-[300px] m-2 p-2 flex flex-col items-end bg-white rounded-md">
-      <NewButton />
+    <div className="w-[300px] m-2 p-2 flex flex-col items-end bg-white rounded-md overflow-y-scroll">
+      <div className="mb-2">
+        <Button color="secondary" size="md" onClick={handleAddChat}>
+          <FiPlusSquare className="w-full h-full" />
+        </Button>
+      </div>
       <ChatList />
     </div>
   );

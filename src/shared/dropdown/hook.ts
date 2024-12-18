@@ -4,7 +4,7 @@ export function useSelected<T>(disabled: boolean, item?: T, displayName?: keyof 
   const [selected, setSelected] = useState<string>(''); /* Dropdown 선택된 옵션 */
 
   useEffect(() => {
-    /* 초기화 */
+    /* Dropdown 초기화 */
     if (!disabled && item) {
       displayName ? setSelected(String(item[displayName])) : null;
     }

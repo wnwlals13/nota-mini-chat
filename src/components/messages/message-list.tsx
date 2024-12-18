@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../../shared/buttons/component';
 import MessageItem from './message-item';
 import { FiArrowDown } from 'react-icons/fi';
@@ -8,16 +8,16 @@ import { useChatStore } from '../../stores/chat/chatStore';
 import Loading from '../../shared/loading/Loading';
 
 export default function MessageList() {
-  const { data: items, isFetching } = useMessageList(); /* 대화 목록 */
+  const { data: items } = useMessageList(); /* 대화 목록 */
   const [showBtn, setShowBtn] = useState(false); /* 스크롤 버튼 노출 여부 */
   const lastMessageRef = useRef<HTMLDivElement | null>(null); /* 마지막 메세지 Ref */
   const listRef = useRef<HTMLDivElement | null>(null); /* 대화 내역 Ref */
-  const { isComplete, setIsComplete } = useChatStore();
+  const { isComplete } = useChatStore();
 
   /* Function : 맨 하단으로 이동 */
-  const handleScrollToBottom = () => {
+  const handleScrollToBottom = useCallback(() => {
     if (lastMessageRef.current) lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -44,10 +44,6 @@ export default function MessageList() {
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (isFetching) setIsComplete(true);
-  }, [isFetching]);
 
   useEffect(() => {
     // 메세지 추가 시, 최신 메세지 노출

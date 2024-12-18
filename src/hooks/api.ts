@@ -1,19 +1,33 @@
+import axios from 'axios';
 import { RequestMsgDto } from './messages/useAddMessage';
 
 export const fetchChats = async () => {
-  const response = await fetch('/chats', { method: 'GET' })
-    .then((res) => res.json())
-    .then((res) => res.data);
+  try {
+    const response = await axios.get('/chats');
 
-  return response;
+    if (!response) {
+      return { data: [] };
+    }
+
+    const results = response.data;
+    return results.data;
+  } catch (err) {
+    throw new Error('failed to load chats');
+  }
 };
 
 export const fetchChatModels = async () => {
-  const response = await fetch('/chat_model', { method: 'GET' })
-    .then((res) => res.json())
-    .then((res) => res.data);
+  try {
+    const response = await axios.get('/chat_model');
+    if (!response) {
+      return { data: [] };
+    }
 
-  return response;
+    const results = response.data;
+    return results.data;
+  } catch (err) {
+    throw new Error('failed to load chat models');
+  }
 };
 
 export const fetchMessages = async (chatId: string) => {

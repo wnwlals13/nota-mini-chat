@@ -9,13 +9,14 @@ export interface RequestMsgDto {
 
 export const useAddMessage = () => {
   const queryClient = useQueryClient();
-  const { curChat } = useChatStore();
+  const { curChat, setIsComplete } = useChatStore();
 
   return useMutation<any, Error, RequestMsgDto>({
     mutationFn: addMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['chats'] });
       queryClient.invalidateQueries({ queryKey: ['messages', curChat?.chat_id] });
+      setIsComplete(true);
     },
   });
 };

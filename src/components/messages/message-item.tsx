@@ -19,7 +19,9 @@ const MessageItem = React.memo(function MessageItem({ text, isUser }: IMessageIt
   return (
     <div className={containerStyles}>
       {!isUser && renderProfile(<img src={NotaLogo} />)}
-      <div className="bg-white pl-2 pr-2 rounded-lg flex items-center">{text}</div>
+      <div className="bg-white p-2 rounded-lg flex items-center max-w-[500px] text-wrap">
+        {text}
+      </div>
       {isUser && renderProfile(<FiUser />)}
     </div>
   );
