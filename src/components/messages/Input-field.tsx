@@ -66,6 +66,8 @@ export default function InputField() {
   }, [msgSuccess]);
 
   useEffect(() => {
+    if ((!curChat || isNewChat) && inputRef.current) inputRef.current.value = '';
+
     if ((!!curChat || !!newChatModel) && !isPending) setIsTxtDisabled(false);
     else setIsTxtDisabled(true);
   }, [curChat, newChatModel, isPending]);
