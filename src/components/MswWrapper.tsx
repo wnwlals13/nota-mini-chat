@@ -6,7 +6,15 @@ export function MswProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const startMockServer = async () => {
-      await worker.start();
+      if (process.env.NODE_ENV === 'development') {
+        await worker.start();
+      } else if (process.env.NODE_ENV === 'production') {
+        await worker.start({
+          serviceWorker: {
+            url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
+          },
+        });
+      }
       setIsReady(true);
     };
 
