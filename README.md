@@ -1,4 +1,4 @@
-## Nota 과제 프로젝트
+## Nota 채팅 프로젝트
 
 ### 진행 기간
 
@@ -14,6 +14,11 @@
 - 공통 컴포넌트는 모듈화하여 코드의 재사용성을 높이고자 했습니다.
 - 리팩토링을 통해 코드를 개선하고, 유지보수를 편하게 하기 위해 노력했습니다.
 - 코드 컨벤션, 커밋 컨벤션을 지키며 작업했습니다.
+
+### 기술 스택
+
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white) ![React-Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=React-Query&logoColor=white) ![Zustand](https://img.shields.io/badge/zustand-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Tailwind-CSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Github-Pages](https://img.shields.io/badge/githubpages-222222.svg?style=for-the-badge&logo=githubpages&logoColor=white) ![Github-Actions](https://img.shields.io/badge/githubactions-2088FF.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 
 ### 구현 기능
 
