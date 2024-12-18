@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../../shared/buttons/component';
 import MessageItem from './message-item';
 import { FiArrowDown } from 'react-icons/fi';
-import { useMessageList } from '../../hooks/messages/useMessageList';
+import { useMessageList } from '../../services/messages/useMessageList';
 import { Dialogue } from '../../type';
 import { useChatStore } from '../../stores/chat/chatStore';
 import Loading from '../../shared/loading/Loading';

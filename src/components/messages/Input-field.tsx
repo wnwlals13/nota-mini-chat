@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import TextArea from '../../shared/inputs/textarea/component';
 import { useChatStore } from '../../stores/chat/chatStore';
 import Button from '../../shared/buttons/component';
-import { useAddMessage } from '../../hooks/messages/useAddMessage';
-import { useAddChat } from '../../hooks/chats/useAddChat';
+import { useAddMessage } from '../../services/messages/useAddMessage';
+import { useAddChat } from '../../services/chats/useAddChat';
 import { debounce } from '../../utils/common';
 import { FiSend } from 'react-icons/fi';
 

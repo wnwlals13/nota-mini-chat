@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useChatModelList } from '../../hooks/chats/useChatModelList';
+import { useChatModelList } from '../../services/chats/useChatModelList';
 import Dropdown from '../../shared/dropdown/component';
 import { useChatStore } from '../../stores/chat/chatStore';
 import { ChatModel } from '../../type';

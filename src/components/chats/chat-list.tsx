@@ -1,7 +1,7 @@
 import ChatItem from './chat-item';
 import { useChatStore } from '../../stores/chat/chatStore';
 import { Chat } from '../../type';
-import { useChatList } from '../../hooks/chats/useChatList';
+import { useChatList } from '../../services/chats/useChatList';
 import Loading from '../../shared/loading/Loading';
 
 export default function ChatList() {
