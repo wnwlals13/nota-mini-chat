@@ -80,6 +80,7 @@ export default function InputField() {
           ref={inputRef}
           disabled={isTxtDisabled}
           onChange={handlePrompt}
+          placeholder="질문을 입력해주세요."
           onKeyDown={handleKeyDonw}
         />
       </div>
