@@ -31,27 +31,40 @@ export const fetchChatModels = async () => {
 };
 
 export const fetchMessages = async (chatId: string) => {
-  const response = await fetch(`/chats/${chatId}`)
-    .then((res) => res.json())
-    .then((res) => res.data.dialogues);
-
-  return response;
+  try {
+    const response = await axios.get(`/chats/${chatId}`);
+    if (!response) {
+      return { data: [] };
+    }
+    const results = response.data.data;
+    return results.dialogues;
+  } catch (err) {
+    throw new Error('failed to load messages');
+  }
 };
 
 export const addMessage = async ({ chatId, prompt }: RequestMsgDto) => {
-  const response = await fetch(`/chats/${chatId}/dialogues`, {
-    method: 'POST',
-    body: JSON.stringify({ prompt: prompt }),
-  }).then((res) => res.json());
-
-  return response;
+  try {
+    const response = await axios.post(`/chats/${chatId}/dialogues`, { prompt: prompt });
+    if (!response) {
+      return { status: 500 };
+    }
+    const results = response.data;
+    return results;
+  } catch (err) {
+    throw new Error('failed to add message');
+  }
 };
 
 export const addChat = async (chatModelId: string) => {
-  const response = await fetch('/chats', {
-    method: 'POST',
-    body: JSON.stringify({ chat_model_id: chatModelId }),
-  }).then((res) => res.json());
-
-  return response;
+  try {
+    const response = await axios.post(`/chats`, { chat_model_id: chatModelId });
+    if (!response) {
+      return { status: 500 };
+    }
+    const results = response.data;
+    return results;
+  } catch (err) {
+    throw new Error('failed to add chat');
+  }
 };

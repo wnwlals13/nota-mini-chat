@@ -42,7 +42,9 @@ export default function InputField() {
 
   useEffect(() => {
     /* 새채팅 추가 후, 해당 채팅에 대한 질문 추가 */
-    if (chatSuccess && curChat && prompt) addMsg({ chatId: curChat.chat_id, prompt: prompt });
+    if (chatSuccess && curChat && prompt) {
+      addMsg({ chatId: curChat.chat_id, prompt: prompt });
+    }
   }, [curChat, chatSuccess]);
 
   /* 질문 입력 이벤트 */
