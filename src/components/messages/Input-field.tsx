@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import TextArea from '../../shared/inputs/textarea/component';
 import { useChatStore } from '../../stores/chat/chatStore';
 import Button from '../../shared/buttons/component';
-import { useAddMessage } from '../../hooks/useAddMessage';
-import { useAddChat } from '../../hooks/useAddChat';
+import { useAddMessage } from '../../hooks/messages/useAddMessage';
+import { useAddChat } from '../../hooks/chats/useAddChat';
 import { debounce } from '../../utils/common';
+import { FiSend } from 'react-icons/fi';
 
 export default function InputField() {
-  const { curChat, isAvailable, isNewChat, newChatModel, setIsNewChat, setIsComplete } =
-    useChatStore();
+  const { curChat, isNewChat, newChatModel, setIsNewChat, setIsComplete } = useChatStore();
   const [prompt, setPrompt] = useState<string>('');
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { mutate: addChat, isSuccess: chatSuccess } = useAddChat();
@@ -23,15 +23,21 @@ export default function InputField() {
 
     /* 새 채팅이고, 채팅 모델을 선택했으면 새롭게 추가 */
     if (isNewChat && newChatModel) {
-      addChat(newChatModel);
+      addChat(newChatModel.chat_model_id);
+    } else {
+      if (curChat) addMsg({ chatId: curChat.chat_id, prompt: prompt });
     }
-    if (curChat) addMsg({ chatId: curChat.chat_id, prompt: prompt });
 
     /* 새 채팅 해제 */
     setIsNewChat(false);
   };
 
-  /* 질문 입력 이벤튼 */
+  useEffect(() => {
+    /* 새채팅 추가 후, 해당 채팅에 대한 질문 추가 */
+    if (chatSuccess && curChat) addMsg({ chatId: curChat.chat_id, prompt: prompt });
+  }, [curChat, chatSuccess]);
+
+  /* 질문 입력 이벤트 */
   const handlePrompt = debounce((e) => setPrompt(e.target.value));
 
   /* TextArea 내 Enter 이벤트 핸들러 */
@@ -43,10 +49,6 @@ export default function InputField() {
   };
 
   useEffect(() => {
-    if (chatSuccess && curChat) addMsg({ chatId: curChat.chat_id, prompt: prompt });
-  }, [chatSuccess]);
-
-  useEffect(() => {
     /* 질문이 끝나면 Textarea 질문 내용 초기화 */
     if (!isPending) {
       if (inputRef.current) inputRef.current.value = '';
@@ -54,25 +56,29 @@ export default function InputField() {
     }
   }, [isPending]);
 
-  const isDisabled = !prompt || isPending; /* 제출 가능 여부 : 질문이 없거나 질문을 한 경우 */
+  const isDisabled = !prompt || isPending; /* 제출 불가 : 질문이 없거나 질문을 한 경우 */
+  const isTxtDisabled =
+    (!curChat || !newChatModel) &&
+    isPending; /* 입력 불가 : 채팅을 선택하지 않았거나, 모델이 선택되지 않았고 질문을 한 경우 */
 
   return (
     <div className="w-full absolute bottom-0 p-2 flex gap-2 bg-white">
       <div className="w-full">
         <TextArea
           ref={inputRef}
-          disabled={isAvailable || isPending}
+          disabled={isTxtDisabled}
           onChange={handlePrompt}
           onKeyDown={handleKeyDonw}
         />
       </div>
       <Button
         variant={`${isDisabled ? 'disabled' : 'default'}`}
-        color={!!prompt ? 'primary' : undefined}
+        size="lg"
+        color={isDisabled ? undefined : 'primary'}
         disabled={isDisabled}
         onClick={handleSubmit}
       >
-        제출
+        <FiSend />
       </Button>
     </div>
   );

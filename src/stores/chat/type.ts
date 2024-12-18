@@ -3,14 +3,12 @@ import { Chat, ChatModel } from '../../type';
 export interface IChatStore {
   curChat: Chat | null;
   chatModels: ChatModel[];
-  isAvailable: boolean;
   isNewChat: boolean;
-  newChatModel: string;
+  newChatModel: ChatModel | null;
   isComplete: boolean;
 
   setCurChat: (item: Chat | null) => void;
-  setIsAvailable: (state: boolean) => void;
   setIsNewChat: (state: boolean) => void;
-  setNewChatModel: (id: string) => void;
+  setNewChatModel: (item: ChatModel) => void;
   setIsComplete: (state: boolean) => void;
 }

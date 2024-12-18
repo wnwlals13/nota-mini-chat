@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import Button from '../../shared/buttons/component';
 import { useChatStore } from '../../stores/chat/chatStore';
 import ChatList from './chat-list';
+import { FiPlusSquare } from 'react-icons/fi';
 
 function NewButton() {
   const { setIsNewChat, setCurChat } = useChatStore();
@@ -14,8 +15,8 @@ function NewButton() {
 
   return (
     <div className="mb-2">
-      <Button color="secondary" onClick={handleAddChat}>
-        New
+      <Button color="secondary" size="md" onClick={handleAddChat}>
+        <FiPlusSquare className="w-full h-full" />
       </Button>
     </div>
   );

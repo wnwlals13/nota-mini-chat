@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchChatModels } from './api';
-import { useChatStore } from '../stores/chat/chatStore';
+import { useChatStore } from '../../stores/chat/chatStore';
+import { fetchChatModels } from '../api';
 
 export const useChatModelList = () => {
   const { curChat, isNewChat } = useChatStore();

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addMessage } from './api';
-import { useChatStore } from '../stores/chat/chatStore';
+import { addMessage } from '../api';
+import { useChatStore } from '../../stores/chat/chatStore';
 
 export interface RequestMsgDto {
   chatId: string;

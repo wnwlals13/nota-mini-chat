@@ -1,4 +1,4 @@
-import { RequestMsgDto } from './useAddMessage';
+import { RequestMsgDto } from './messages/useAddMessage';
 
 export const fetchChats = async () => {
   const response = await fetch('/chats', { method: 'GET' })
