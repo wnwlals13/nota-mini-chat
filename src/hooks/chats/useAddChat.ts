@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addChat } from './api';
-import { Chat } from '../type';
-import { useChatStore } from '../stores/chat/chatStore';
+import { useMutation } from '@tanstack/react-query';
+import { addChat } from '../api';
+import { Chat } from '../../type';
+import { useChatStore } from '../../stores/chat/chatStore';
 
 export interface ResponseChatDto {
   data: Chat[];

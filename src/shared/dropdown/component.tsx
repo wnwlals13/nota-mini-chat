@@ -1,80 +1,39 @@
-import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
 import { IDropdownProps } from './type';
-import Loading from '../loading/Loading';
+import DropdownHead from './head';
+import DropdownBody from './body';
+import { useSelected } from './hook';
 
-export default function Dropdown<T>({
-  items,
-  displayName,
-  placeholder,
-  initialOption,
-  disabled,
-  onChange,
-}: IDropdownProps<T>) {
-  const [active, setActive] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string>('');
+export default function Dropdown<T>(props: IDropdownProps<T>) {
+  const { disabled, currentOption, items, displayName, onChange } = props;
+  const [active, setActive] = useState<boolean>(false); /* Dropdown 리스트 열림 여부 */
+  const { selected, setSelected } = useSelected(
+    disabled,
+    currentOption ? currentOption : items ? items[0] : undefined,
+    displayName,
+  );
 
+  /* Dropdown 박스 열림 이벤트 */
   const handleOpen = () => {
     setActive((prev) => !prev);
   };
 
-  /* 아이템 선택 함수 */
-  const handleUpdateSelected = (item: T) => {
+  /* Dropdown 아이템 선택 이벤트 */
+  const handleChange = (item: T) => {
     setSelected(String(item[displayName]));
     setActive((prev) => !prev);
     onChange && onChange(item);
   };
 
   useEffect(() => {
-    if (initialOption) setSelected(initialOption);
-    else setSelected('');
-  }, [initialOption]);
-
-  useEffect(() => {
-    if (items) setSelected(String(items[0][displayName]));
+    /* 새 채팅 추가 시 */
+    if (items && !currentOption) onChange && onChange(items[0]);
   }, [items]);
-
-  /* Button 스타일 */
-  const buttonStyles = clsx(
-    'w-full h-[35px] flex justify-between items-center border rounded-md pl-2 pr-2',
-    {
-      'bg-gray1': !disabled,
-    },
-  );
-
-  /* DropBox 스타일 */
-  const dropboxStyles = clsx(
-    'absolute w-full max-h-0 bg-white rounded-md shadow-md backdrop-blur-md overflow-hidden',
-    {
-      'max-h-[110px] mt-2 p-2 overflow-y-hidden': active,
-    },
-  );
 
   return (
     <div className="relative w-[200px]">
-      <button className={buttonStyles} onClick={handleOpen} disabled={!disabled}>
-        {selected ? <p>{selected}</p> : <p className="text-gray-500">{placeholder}</p>}
-        <FiChevronDown />
-      </button>
-
-      <ul className={dropboxStyles}>
-        {items?.length > 0 ? (
-          items?.map((item, idx) => (
-            <li
-              key={idx}
-              className="p-1 hover:bg-gray1 rounded-md"
-              onClick={() => handleUpdateSelected(item)}
-            >
-              <a className="cursor-pointer">{String(item[displayName])}</a>
-            </li>
-          ))
-        ) : (
-          <div className="h-[110px]">
-            <Loading />
-          </div>
-        )}
-      </ul>
+      <DropdownHead onClick={handleOpen} selected={selected} {...props} />
+      {active && <DropdownBody onClickWithProps={handleChange} {...props} />}
     </div>
   );
 }

@@ -100,7 +100,7 @@ export const handlers = [
 
   // 모델 목록
   http.get('/chat_model', async () => {
-    await delay(1000);
+    await delay(500);
     return HttpResponse.json({
       data: chatModels,
     });

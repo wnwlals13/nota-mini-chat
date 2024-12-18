@@ -1,6 +1,6 @@
-import { useChatStore } from '../stores/chat/chatStore';
 import { useQuery } from '@tanstack/react-query';
-import { fetchMessages } from './api';
+import { useChatStore } from '../../stores/chat/chatStore';
+import { fetchMessages } from '../api';
 
 export const useMessageList = () => {
   const { curChat } = useChatStore();

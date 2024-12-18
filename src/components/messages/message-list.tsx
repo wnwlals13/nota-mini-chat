@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../../shared/buttons/component';
 import MessageItem from './message-item';
 import { FiArrowDown } from 'react-icons/fi';
-import { useMessageList } from '../../hooks/useMessageList';
+import { useMessageList } from '../../hooks/messages/useMessageList';
 import { Dialogue } from '../../type';
 import { useChatStore } from '../../stores/chat/chatStore';
 import Loading from '../../shared/loading/Loading';
 
 export default function MessageList() {
-  const { data: items, isFetching } = useMessageList(); /* 대화 목록 */
+  const { data: items } = useMessageList(); /* 대화 목록 */
   const [showBtn, setShowBtn] = useState(false); /* 스크롤 버튼 노출 여부 */
   const lastMessageRef = useRef<HTMLDivElement | null>(null); /* 마지막 메세지 Ref */
   const listRef = useRef<HTMLDivElement | null>(null); /* 대화 내역 Ref */
-  const { isComplete, setIsComplete } = useChatStore();
+  const { isComplete } = useChatStore();
 
   /* Function : 맨 하단으로 이동 */
-  const handleScrollToBottom = () => {
+  const handleScrollToBottom = useCallback(() => {
     if (lastMessageRef.current) lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -46,10 +46,6 @@ export default function MessageList() {
   }, []);
 
   useEffect(() => {
-    if (isFetching) setIsComplete(true);
-  }, [isFetching]);
-
-  useEffect(() => {
     // 메세지 추가 시, 최신 메세지 노출
     if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
   }, [items]);
@@ -60,12 +56,9 @@ export default function MessageList() {
       className="h-full m-2 p-2 mb-[100px] bg-gray1 flex flex-col gap-2 overflow-y-scroll"
     >
       {items?.map((item: Dialogue, idx: number) => (
-        <div className="flex flex-col" key={idx}>
-          <MessageItem text={item.prompt} />
-          <div className="flex-1 flex justify-start gap-2">
-            <div className="w-7 h-7 bg-white rounded-full"></div>
-            <div className="flex items-center">{item.completion}</div>
-          </div>
+        <div className="flex flex-col gap-5" key={idx}>
+          <MessageItem text={item.prompt} isUser={true} />
+          <MessageItem text={item.completion} isUser={false} />
         </div>
       ))}
       {!isComplete && <Loading />}
