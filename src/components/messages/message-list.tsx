@@ -53,7 +53,7 @@ export default function MessageList() {
   return (
     <div
       ref={listRef}
-      className="h-full m-2 p-2 mb-[100px] bg-gray1 flex flex-col gap-2 overflow-y-scroll"
+      className="m-2 mb-[100px] flex h-full flex-col gap-2 overflow-y-scroll bg-gray1 p-2"
     >
       {items?.map((item: Dialogue, idx: number) => (
         <div className="flex flex-col gap-5" key={idx}>
@@ -65,7 +65,7 @@ export default function MessageList() {
       <div ref={lastMessageRef} className="flex h-[30px] min-h-[20px]"></div>
       {showBtn && (
         <Button
-          className="flex justify-center items-center absolute w-[35px] h-[35px] bottom-0 left-1/2 -translate-x-1/2 mb-[110px] z-10 rounded-full bg-gray-500 shadow-lg"
+          className="absolute bottom-0 left-1/2 z-10 mb-[110px] flex h-[35px] w-[35px] -translate-x-1/2 items-center justify-center rounded-full bg-gray-500 shadow-lg"
           onClick={handleScrollToBottom}
         >
           <FiArrowDown />

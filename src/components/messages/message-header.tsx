@@ -21,7 +21,7 @@ export default function MessageHeader() {
   }, [isNewChat, curChat]);
 
   return (
-    <div className="pt-2 pl-2 pr-2">
+    <div className="pl-2 pr-2 pt-2">
       <Dropdown<ChatModel>
         items={chatModels as ChatModel[]}
         displayName="chat_model_name"

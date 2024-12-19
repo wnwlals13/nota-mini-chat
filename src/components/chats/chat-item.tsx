@@ -19,7 +19,7 @@ export default function ChatItem({ item, isSelected, handleClick }: ChatItemProp
   return (
     <a className={styles} onClick={handleClick}>
       <div className="truncate">{dialogues[0]?.prompt}</div>
-      <div className="flex justify-end text-gray-500 text-sm">{chat_model_name}</div>
+      <div className="flex justify-end text-sm text-gray-500">{chat_model_name}</div>
     </a>
   );
 }

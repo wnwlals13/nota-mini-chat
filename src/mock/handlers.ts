@@ -58,7 +58,7 @@ export const handlers = [
     '/chats/:chatId',
     async ({ params }) => {
       const { chatId } = params;
-      const data = chatData.find((chat) => chat.chat_id === chatId);
+      const data = chatData.find((chat) => chat.chat_id === chatId) as Record<string, any>;
 
       return HttpResponse.json({
         data,

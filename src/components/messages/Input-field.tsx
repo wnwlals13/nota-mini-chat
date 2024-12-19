@@ -78,7 +78,7 @@ export default function InputField() {
   }, [prompt, isPending]);
 
   return (
-    <div className="w-full absolute bottom-0 p-2 flex gap-2 bg-white">
+    <div className="absolute bottom-0 flex w-full gap-2 bg-white p-2">
       <div className="w-full">
         <TextArea
           ref={inputRef}
