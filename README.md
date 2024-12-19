@@ -1,7 +1,8 @@
 # Nota 채팅 프로젝트
 
 > React와 MSW를 사용한 채팅 서비스 구현
-> <img width="1511" alt="image" src="https://github.com/user-attachments/assets/aadc73db-dfd2-4aa3-80d5-0574741e5ef5" />
+
+<img width="1511" alt="image" src="https://github.com/user-attachments/assets/aadc73db-dfd2-4aa3-80d5-0574741e5ef5" />
 
 <br/>
 
@@ -44,7 +45,7 @@
 - **채팅 목록 [추가👍]**
 
   - 채팅 아이템 첫 질문은 최대 1줄까지만 노출, 길어질 경우 말줄임(...)처리
-    - 이유 : ChatGPT를 사용했을 때, 질문의 길이가 길어도 질문할 수 있다는 점을 생각했을 때, 질문은 1줄 이상일 경우가 많을 것으로 추측했고 그에 맞게 처리했습니다.
+    - 이유 : ChatGPT를 참고하여 질문의 길이가 길어도 질문할 수 있다는 점을 생각했을 때, 1줄 이상일 경우가 많을 것으로 추측해 처리했습니다.
 
 - **현재 채팅 [필수⭐️]**
 
@@ -59,7 +60,7 @@
 - **현재 채팅 [추가👍]**
 
   - 선택된 채팅이 없고, 새로운 채팅도 추가하지 않은 경우에는 Dropdown, 입력란, 제출버튼 비활성화
-    - 이유 : 채팅 모델 초기화 시점은, 새로운 채팅을 추가하거나 기존 채팅을 선택하는 시점이므로 이전에는 값이 비어있다고 판단했습니다. 이 때, placeholder 를 노출하여 선택되지 않았음을 표시하였습니다.
+    - 이유 : 채팅 모델 초기화 시점은, 새로운 채팅을 추가하거나 기존 채팅을 선택하는 시점이므로 이전에는 값이 비어있다고 판단했고 placeholder로 'Select Model' 문구를 표시하였습니다.
 
 <br/>
 
@@ -107,10 +108,10 @@
  ┃ ┣ 📂chats
  ┃ ┣ 📂messages
  ┃ ┗ 📂pages
- ┣ 📂hooks
+ ┣ 📂mock
+ ┣ 📂services
  ┃ ┣ 📂chats
  ┃ ┗ 📂messages
- ┣ 📂mock
  ┣ 📂shared
  ┃ ┣ 📂buttons
  ┃ ┣ 📂dropdown
@@ -124,8 +125,8 @@
 ```
 
 - assets : 프로젝트 이미지 등 소스 폴더
-- components : 프로젝트 내 각 컴포넌트 폴더
-- hooks : 프로젝트의 API 훅 폴더
+- components : 프로젝트 내 각 컴포넌트 폴더 (chats : 채팅목록, messages : 채팅 내역 목록)
+- services : 프로젝트의 API 관련 폴더
 - mock : msw 관련 폴더
 - shared : 공통 UI 컴포넌트 폴더
 - stores : 프로젝트 전역 상태 관리 폴더
