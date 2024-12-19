@@ -14,10 +14,10 @@ export default function ChatSection() {
   }, []);
 
   return (
-    <div className="w-[300px] m-2 p-2 flex flex-col items-end bg-white rounded-md overflow-y-scroll">
+    <div className="m-2 flex w-[300px] flex-col items-end overflow-y-scroll rounded-md bg-white p-2">
       <div className="mb-2">
         <Button color="secondary" size="md" onClick={handleAddChat}>
-          <FiPlusSquare className="w-full h-full" />
+          <FiPlusSquare className="h-full w-full" />
         </Button>
       </div>
       <ChatList />

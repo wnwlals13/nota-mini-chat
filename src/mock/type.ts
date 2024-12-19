@@ -13,7 +13,7 @@ export interface ChatParams {
 export interface FetchChatRequestBody {}
 
 export interface FetchChatResponseBody {
-  data: any;
+  data: Record<string, any>;
 }
 
 export interface AddMsgRequestBody {
