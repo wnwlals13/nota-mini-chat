@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { Chat } from '../../type';
+import React from 'react';
 
 export interface ChatItemProps {
   item: Chat;
@@ -7,7 +8,7 @@ export interface ChatItemProps {
   handleClick: () => void;
 }
 
-export default function ChatItem({ item, isSelected, handleClick }: ChatItemProps) {
+const ChatItem = React.memo(function ChatItem({ item, isSelected, handleClick }: ChatItemProps) {
   if (!item) return null;
 
   const { chat_model_name, dialogues } = item;
@@ -22,4 +23,6 @@ export default function ChatItem({ item, isSelected, handleClick }: ChatItemProp
       <div className="flex justify-end text-sm text-gray-500">{chat_model_name}</div>
     </a>
   );
-}
+});
+
+export default ChatItem;
