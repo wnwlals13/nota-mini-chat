@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.62.7",
     "axios": "^1.7.9",
+    "ci": "^2.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "eslint-plugin-tailwindcss": "^3.17.5",
